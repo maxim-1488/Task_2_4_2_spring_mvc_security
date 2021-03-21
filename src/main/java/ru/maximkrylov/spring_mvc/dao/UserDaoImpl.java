@@ -3,6 +3,7 @@ package ru.maximkrylov.spring_mvc.dao;
 import org.springframework.stereotype.Repository;
 import ru.maximkrylov.spring_mvc.model.User;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -44,8 +45,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String username) {
-       TypedQuery<User> query = entityManager.createQuery("select u from User u WHERE u.username=: username",
-               User.class).setParameter("username", username);
-       return query.getSingleResult();
+        TypedQuery<User> query = entityManager.createQuery("select u from User u where u.username=:username",
+                User.class).setParameter("username", username);
+        return query.getSingleResult();
     }
 }

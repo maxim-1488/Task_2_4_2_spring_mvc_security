@@ -33,13 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/logout").permitAll() // доступность всем
-                .antMatchers("/user").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User, Admin
-                .antMatchers("/admin").access("hasAnyRole('ROLE_ADMIN')") // разрешает входить на /admin пользователю с ролью Admin
+                .antMatchers("/user/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')") // разрешаем входить на /user пользователям с ролью User, Admin
+                .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')") // разрешает входить на /admin пользователю с ролью Admin
                 .and()
                 .formLogin()  // Spring сам подставит свою логин форму
 //                .loginProcessingUrl("/j_spring_security_check")
 //                .loginPage("/login")
-//                .defaultSuccessUrl("/user")
+//                .defaultSuccessUrl("/user", true)
 //                .failureUrl("/login?error=true")
 //                .usernameParameter("name")
 //                .passwordParameter("password")
