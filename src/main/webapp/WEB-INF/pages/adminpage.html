@@ -51,7 +51,7 @@
     <br/>
     <br/>
     <h2>PHONE BOOK</h2>
-    <h3><a href="/users/new.html">Add new User</a></h3>
+    <h3><a href="/admin/new.html">Add new User</a></h3>
     <table border="1" cellpadding="5">
         <tr>
             <th>ID</th>
@@ -64,7 +64,7 @@
         </tr>
         <tr th:each="user : ${allUsers}">
             <td th:text="${user.id}">ID</td>
-            <td th:text="${user.username}"><NAME></td>
+            <td th:text="${user.username}">NAME</td>
             <td th:text="${user.lastName}">LAST_NAME</td>
             <td th:text="${user.phoneNumber}">PHONE_NUMBER</td>
             <td th:text="${user.email}">EMAIL</td>

@@ -8,7 +8,7 @@
 <body>
 <div align="center">
     <h2>New User</h2>
-    <form action="/add"  method="post">
+    <form action="add-user"  method="POST">
         <table border="0" cellpadding="5">
             <tr>
                 <td>Name:</td>
@@ -27,9 +27,18 @@
                 <td><input name="email"/></td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit" value="Add"></td>
+                <td>Password:</td>
+                <td><input name="password"/></td>
             </tr>
+            <input type="checkbox" name="roles" value="ROLE_USER"/>USER
+            <input type="checkbox" name="roles" value="ROLE_ADMIN"/>ADMIN
+            <br/>
         </table>
+        <br/>
+            <td colspan="2"><input type="submit" value="Add"></td>
+        <br/>
+        <br/>
+        <a th:href="@{/logout}">LOGOUT</a>
     </form>
 </div>
 </body>

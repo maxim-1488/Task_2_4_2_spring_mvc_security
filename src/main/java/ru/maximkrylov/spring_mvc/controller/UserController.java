@@ -10,6 +10,8 @@ import ru.maximkrylov.spring_mvc.model.User;
 import ru.maximkrylov.spring_mvc.service.RoleService;
 import ru.maximkrylov.spring_mvc.service.UserService;
 
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -35,18 +37,19 @@ public class UserController {
         return "adminpage";
     }
 
-    @GetMapping(value = "/users/new")
-    public String newUser() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", new User());
-        modelAndView.addObject("roles", roleService.getAllRoles());
+    @GetMapping(value = "/admin/new")
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "new";
     }
 
-    @PostMapping(value = "/add")
-    public String addUser(@ModelAttribute User user) {
+    @PostMapping(value = "/admin/add-user")
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] checkBoxRoles) {
         userService.addUser(user);
-        return "adminpage";
+        System.out.println(checkBoxRoles);
+
+        return "redirect:/admin";
     }
 
     //страница для редактирования юзеров
