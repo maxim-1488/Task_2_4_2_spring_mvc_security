@@ -6,11 +6,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.maximkrylov.spring_mvc.model.Role;
 import ru.maximkrylov.spring_mvc.model.User;
 import ru.maximkrylov.spring_mvc.service.RoleService;
 import ru.maximkrylov.spring_mvc.service.UserService;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class UserController {
@@ -45,9 +51,16 @@ public class UserController {
     }
 
     @PostMapping(value = "/admin/add-user")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "roles") String[] checkBoxRoles) {
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String role : checkBoxRoles) {
+            roleSet.add(roleService.getRoleByName(role));
+        }
+        user.setRoles(roleSet);
         userService.addUser(user);
-        System.out.println(checkBoxRoles);
+//        Set<Role> roleSet = Stream.of(checkBoxRoles).forEach();
+//        user.setRoles(roleSet);
+//        userService.addUser(user);
 
         return "redirect:/admin";
     }
@@ -61,14 +74,19 @@ public class UserController {
     }
 
     @PostMapping(value = "/edit")
-    public String editUser(@ModelAttribute User user) {
-            userService.updateUser(user);
-        return "adminpage";
+    public String editUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+        Set<Role> roleSet = new HashSet<>();
+        for (String roles : checkBoxRoles) {
+            roleSet.add(roleService.getRoleByName(roles));
+        }
+        user.setRoles(roleSet);
+        userService.updateUser(user);
+        return "redirect:/admin";
     }
 
     @GetMapping(value = "/remove/{id}")
     public String removeUser(@PathVariable("id") long id) {
         userService.removeUserById(id);
-        return "adminpage";
+        return "redirect:/admin";
     }
 }
